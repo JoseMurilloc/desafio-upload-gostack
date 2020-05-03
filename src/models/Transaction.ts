@@ -1,16 +1,23 @@
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity('transactions')
 class Transaction {
+  @PrimaryColumn()
   id: string;
 
+  @Column()
   title: string;
 
-  type: 'income' | 'outcome';
-
-  value: number;
-
-  category_id: string;
-
+  @CreateDateColumn()
   created_at: Date;
 
+  @UpdateDateColumn()
   updated_at: Date;
 }
 
