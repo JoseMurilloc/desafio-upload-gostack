@@ -1,18 +1,31 @@
 import {
   Entity,
-  PrimaryColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import Category from './Category';
 
 @Entity('transactions')
 class Transaction {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   title: string;
+
+  @Column()
+  type: string;
+
+  @Column()
+  value: number;
+
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'catedory_id' })
+  category_id: string;
 
   @CreateDateColumn()
   created_at: Date;
