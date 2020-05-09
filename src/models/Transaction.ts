@@ -20,7 +20,16 @@ class Transaction {
   @Column()
   type: 'income' | 'outcome';
 
-  @Column('decimal')
+  @Column('float', {
+    transformer: {
+      to(value: number): number {
+        return value;
+      },
+      from(value: string): number {
+        return parseFloat(value);
+      },
+    },
+  })
   value: number;
 
   @ManyToOne(() => Category)
