@@ -3,10 +3,6 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 export default class CreateTransaction1588516100682
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TYPE "income_or_outcome" AS ENUM('income', 'outcome')`,
-    );
-
     await queryRunner.createTable(
       new Table({
         name: 'transactions',
@@ -15,16 +11,23 @@ export default class CreateTransaction1588516100682
             name: 'id',
             type: 'uuid',
             isPrimary: true,
+            isUnique: true,
             generationStrategy: 'uuid',
+            default: `uuid_generate_v4()`,
           },
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'type',
-            type: 'income_or_outcome',
+            type: 'varchar',
+          },
+          {
+            name: 'value',
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
           },
           {
             name: 'created_at',
@@ -43,6 +46,5 @@ export default class CreateTransaction1588516100682
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('transactions');
-    await queryRunner.query(`DROP TYPE income_or_outcome`);
   }
 }

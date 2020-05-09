@@ -23,7 +23,7 @@ export default class AlterTransactionFieldToCategoryId1588516855640
         name: 'TransactionsCategory',
         columnNames: ['category_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'categorys',
+        referencedTableName: 'categories',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
