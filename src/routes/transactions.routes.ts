@@ -5,7 +5,7 @@ import multer from 'multer';
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import CreateTransactionService from '../services/CreateTransactionService';
 import DeleteTransactionService from '../services/DeleteTransactionService';
-import ImportTransactionsService from '../services/ImportTransactionsService';
+// import ImportTransactionsService from '../services/ImportTransactionsService';
 
 import multerConfig from '../config/upload';
 
@@ -18,32 +18,15 @@ interface ConvertToStrignForInteger {
 }
 
 transactionsRouter.get('/', async (request, response) => {
-  /**
-   * Value esta vindo como STRING e precisa ser NUMBER
-   */
-  const transcationRepository = getCustomRepository(TransactionsRepository);
+  const transactionRepository = getCustomRepository(TransactionsRepository);
 
-  const transcations = await transcationRepository.find({
-    join: {
-      alias: 'transcation',
-      leftJoinAndSelect: {
-        category: 'transcation.category',
-      },
-    },
-  });
+  const transactions = await transactionRepository.find();
 
-  transcations.map(transcation => {
-    delete transcation.category_id;
-    const value = Number(transcation.value);
-    delete transcation.value;
-    transcation.value = value;
-  });
-
-  const balence = await transcationRepository.getBalance();
+  const balance = await transactionRepository.getBalance();
 
   return response.json({
-    transcations,
-    balence,
+    transactions,
+    balance,
   });
 });
 
