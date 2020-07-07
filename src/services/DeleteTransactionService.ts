@@ -12,8 +12,6 @@ class DeleteTransactionService {
 
     const transicationExists = await transicationRepository.find({ id });
 
-    console.log(transicationExists);
-
     if (transicationExists.length === 0) {
       throw new AppError('Transação não existente', 400);
     }

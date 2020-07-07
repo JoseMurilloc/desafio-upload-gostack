@@ -13,10 +13,6 @@ const transactionsRouter = Router();
 
 const upload = multer(multerConfig);
 
-interface ConvertToStrignForInteger {
-  value: number;
-}
-
 transactionsRouter.get('/', async (request, response) => {
   const transactionRepository = getCustomRepository(TransactionsRepository);
 
